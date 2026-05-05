@@ -1,0 +1,45 @@
+{% extends "template.html" %}
+
+{% block title %}Chat{% endblock %}
+
+{% block content %}
+<div class="main-container column">
+    <div class="row" id="settings">
+        <div id="account-info" class="column">
+            <p>@{{ username }}</p>
+            <p>Currently online!</p>
+        </div>
+        <a href="/logout">Log out</a>
+    </div>
+    <div class="column" id="chatwindow">
+        <!-- Messages go here -->
+    </div>
+    <div class="row" id="controls">
+        <textarea id="chatbox" placeholder="Type your message here... " rows="1"></textarea>
+        <button id="send-message">Send</button>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+<script>
+    var socket = io();
+    socket.emit("join");
+
+    // Send Messages
+    function sendMessage() {
+        var msgInput = document.getElementById("chatbox");
+        var message = msgInput.value;
+        socket.emit("msg", message);
+        msgInput.value = "";
+    }
+
+    const sendButton = document.getElementById("send-message");
+    sendButton.addEventListener("click", sendMessage);
+
+    // Receive Messages
+    socket.on("message", function(data) {
+        var messages = document.getElementById("chatwindow");
+        messages.innerHTML += `<p>${data}</p>`;
+    });
+
+</script>
+{% endblock %}

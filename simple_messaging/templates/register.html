@@ -1,0 +1,28 @@
+{% extends "template.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<form method="post" id="register_form" aria-label="Register Form">
+    <div class="column loginbox">
+        <div class="fieldsep column">
+            <label for="username">Username:</label>
+            <input type="text" name="username" value="{{ username }}" required>
+        </div>
+        <div class="fieldsep column">
+            <label for="email">Email:</label>
+            <input type="email" name="email" value="{{ email }}" required>
+        </div>
+        <div class="fieldsep column">
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="{{ password }}" required>
+        </div>
+        <div class="fieldsep column">
+            <label for="password_confirm">Password (confirm):</label>
+            <input type="password" name="password_confirm" value="{{ password_confirm }}" required>
+        </div>
+        <button type="submit">Register!</button>
+        <p class="error-msg">{{ err }}</p>
+    </div>
+</form>
+{% endblock %}
